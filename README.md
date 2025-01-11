@@ -20,7 +20,7 @@
   - 📊 Matplotlib  
   - 🎨 Seaborn  
   - 🤖 Scikit-learn  
-- **Tools**: 📓 Jupyter Notebook  
+- **Tools**: 📓 VS-Code 
 
 ---
 
