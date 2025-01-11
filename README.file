@@ -20,6 +20,15 @@ This project predicts energy consumption using machine learning. It leverages hi
 - 🎨 **Matplotlib** (Data Visualization)
 - 🌈 **Seaborn** (Statistical Plots)
 
+## 📂 Project Structure  
+```plaintext  
+📦 Energy-Consumption-Prediction  
+├── 📁 dataset/             # Dataset used for energy consumption  
+├── 📁 notebooks/           # Jupyter notebooks for data analysis and model training  
+├── 📁 app/                 # Flask web application files  
+├── 📄 requirements.txt     # Python dependencies  
+└── README.md               # Project documentation  
+
 ## 📦 Installation
 
 Clone the repository:
