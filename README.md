@@ -20,7 +20,8 @@
   - 📊 Matplotlib  
   - 🎨 Seaborn  
   - 🤖 Scikit-learn  
-- **Tools**: 📓 VS-Code 
+- **Tools**: 📓 VS-Code
+- **Framework**: 📊🌐 Flask 
 
 ---
 
