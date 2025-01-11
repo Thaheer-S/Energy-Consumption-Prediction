@@ -1,0 +1,60 @@
+# Energy Consumption Prediction 🔋📊
+
+This project predicts energy consumption using machine learning. It leverages historical data, weather conditions, and other factors to provide insights for better energy management in smart buildings.
+
+## 🚀 Features
+
+- 📊 **Data Preprocessing**: Clean and preprocess energy data.
+- 🤖 **ML Models**: Train models like Linear Regression & Decision Trees.
+- 📈 **Evaluation**: Measure performance with RMSE, MAE, and R².
+- 🎨 **Visualization**: Generate plots to visualize energy usage.
+- 🚀 **Flask API**: Serve the trained model for predictions.
+
+## 🔧 Technologies
+
+- 🐍 **Python**
+- 🚀 **Flask** (Web Framework)
+- 📊 **Pandas** (Data Handling)
+- 🔢 **Numpy** (Numerical Operations)
+- 🤖 **Scikit-learn** (Machine Learning)
+- 🎨 **Matplotlib** (Data Visualization)
+- 🌈 **Seaborn** (Statistical Plots)
+
+## 📦 Installation
+
+Clone the repository:
+
+   git clone https://github.com/Thaheer-S/Energy-Consumption-Prediction.git
+   cd Energy-Consumption-Prediction
+
+Install dependencies:
+
+pip install -r requirements.txt
+
+⚙️ Usage
+
+Preprocess Data:
+ python preprocess.py
+Train Model:
+ python train_model.py
+Start Flask API:
+ python app.py
+ 
+The API will be available at http://127.0.0.1:5000/.
+
+📈 Visualizations
+
+Check the visualizations/ folder for generated charts and plots showcasing energy consumption patterns.
+
+📝 Future Improvements
+🔄 Implement more advanced models (e.g., XGBoost, Random Forest).
+🌍 Deploy the model as a web app.
+💡 Integrate real-time data for predictions.
+
+📄 MIT License
+This project is licensed under the MIT License.
+
+🤝 Contributing
+Feel free to open issues or submit PRs if you'd like to contribute to the project! 😄
+
+🔗 Repository URL: Energy Consumption Prediction on GitHub
