@@ -1,0 +1,145 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  font-family: "Poppins", serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.dashboard-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.nav-bar {
+  width: 15%;
+  height: 100%;
+  background-color: #22577a;
+  color: #ffffff;
+}
+
+.nav-bar .icons,
+.list-icons {
+  color: #80ed99;
+}
+
+.nav-bar .title {
+  font-weight: 600;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  border-bottom: 2px solid #80ed99;
+  padding-top: 3rem;
+  width: max-content;
+  margin-bottom: 3rem;
+  font-size: 22px;
+}
+
+.nav-bar .title a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.nav-bar nav ul {
+  position: relative;
+  left: 50%;
+  transform: translateX(-30%);
+}
+
+.nav-bar nav li {
+  list-style: none;
+  cursor: pointer;
+  position: relative;
+  width: max-content;
+  margin: 2rem 0;
+}
+
+.nav-bar nav li a {
+  text-decoration: none;
+  color: white;
+}
+
+.nav-bar nav .list-icons {
+  padding-right: 3px;
+  font-size: 12px;
+}
+
+.nav-bar nav li a:hover {
+  color: #80ed99;
+}
+
+.nav-bar nav li:hover .list-icons {
+  color: #ffffff;
+}
+
+.hover-animation::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1.5px;
+  background-color: #ffffff;
+  bottom: -2px;
+  left: 0;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+  transform: scaleX(0);
+}
+
+.hover-animation:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.content-container {
+  width: 85%;
+  padding: 25px;
+}
+
+.content-container .grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+}
+
+.content-container .grid .grid-cont {
+  height: 180px;
+  width: 250px;
+  border-radius: 25px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-container .grid .grid-cont p {
+  font-size: 28px;
+  padding: 15px;
+  color: #57cc99;
+}
+
+.content-container .grid .grid-cont h2 {
+  font-weight: 400;
+  color: #38a3a5;
+  font-size: 16px;
+}
+
+.content-container .grid .grid-cont p span {
+  color: #22577a;
+}
+
+.content-container .chart-box .chart {
+  width: 80%;
+  margin-top: 25px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}

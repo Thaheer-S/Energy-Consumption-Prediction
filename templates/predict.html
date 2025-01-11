@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Energy Consumption Prediction</title>
+    <style>
+     @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Caveat:wght@400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+    </style>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        /* background-image: url("static/images/lit-light-bulb-with-graph-background.jpg");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;  */
+      }
+      .container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        margin-top: 5%;
+        /* background: rgba(255, 255, 255, 0.9); 
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px; */
+      }
+
+      .input-container,
+      .output-container {
+        height: 100%;
+        width: 500px;
+      }
+      h1 {
+        text-align: center;
+        color: #22577a;
+        font-size: 28px;
+        padding-bottom: 15px;
+        font-family: "Pacifico", serif;
+        font-weight: 400;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      label {
+        color: #000000;
+      }
+      input {
+        margin: 10px 0;
+        padding: 10px;
+        font-size: 1rem;
+        outline: none;
+        border: none;
+        border-bottom: 1px solid #646464;
+      }
+      button {
+        margin-top: 15px;
+        padding: 10px;
+        padding-bottom: 0px;
+        background: transparent;
+        color: #22577a;
+        border: none;
+        font-size: 20px;
+        border-bottom: 2px solid #57cc99;
+        cursor: pointer;
+        width: max-content;
+        position: relative;
+        left: 50%;
+        transform: translateX(-60%);
+        font-family: "Pacifico", serif;
+      }
+
+      .nav {
+        margin-top: 15px;
+        padding: 10px;
+        padding-bottom: 0px !important;
+        color: #22577a;
+        text-decoration: none;
+        font-size: 20px;
+        border-bottom: 2px solid #57cc99;
+        cursor: pointer;
+        width: max-content;
+        font-family: "Pacifico", serif;
+      }
+
+      .output {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 1.2rem;
+        color: #333;
+      }
+      .error {
+        color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="input-container">
+        <h1>Energy Consumption Prediction</h1>
+        <form action="/predict.html" method="POST">
+          <label for="Heat">Heat:</label>
+          <input type="number" step="any" id="Heat" name="Heat" required />
+
+          <label for="Pressure">Pressure (msl) (hPa):</label>
+          <input
+            type="number"
+            step="any"
+            id="Pressure"
+            name="Pressure"
+            required
+          />
+
+          <label for="Humidity">Relative humidity (%):</label>
+          <input
+            type="number"
+            step="any"
+            id="Humidity"
+            name="Humidity"
+            required
+          />
+
+          <label for="Temperature">Air temperature (degC):</label>
+          <input
+            type="number"
+            step="any"
+            id="Temperature"
+            name="Temperature"
+            required
+          />
+
+          <label for="WindSpeed">Wind speed (m/s):</label>
+          <input
+            type="number"
+            step="any"
+            id="WindSpeed"
+            name="WindSpeed"
+            required
+          />
+
+          <label for="Weekend">Weekend (0 or 1):</label>
+          <input
+            type="number"
+            min="0"
+            max="1"
+            id="Weekend"
+            name="Weekend"
+            required
+          />
+
+          <button type="submit">Predict</button>
+        </form>
+      </div>
+      <div class="output-container">
+        <div class="output">
+          <h1>Result</h1>
+          {% if prediction_text %}
+          <p>Predicted Energy Consumption:{{ prediction_text }}</p>
+          <p>Estimated Cost:{{ cost_text }}</p>
+          <a
+            href="analysis.html
+          "
+            class="nav"
+            >View Visualization</a
+          >
+          {% elif error_text %}
+          <p class="error">{{ error_text }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

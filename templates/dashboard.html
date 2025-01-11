@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Energy Consumption Dashboard</title>
+    <link rel="stylesheet" href="/static/style/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <div class="nav-bar">
+        <h2 class="title">
+          <i class="fas fa-bars icons"></i>
+          <a href="dashboard.html">Dashboard</a>
+        </h2>
+        <nav>
+          <ul>
+            <li class="hover-animation">
+              <a href="predict.html"
+                ><i class="fa fa-angle-double-right list-icons"></i
+                >Prediction</a
+              >
+            </li>
+            <li class="hover-animation">
+              <a href="calculate_cost.html"
+                ><i class="fa fa-angle-double-right list-icons"></i>Cost
+                Calculation</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="content-container">
+        <div class="grid">
+          <div class="grid-cont grid-cont-1">
+            <p id="temp"></p>
+            <h2>Current Air Temperature</h2>
+          </div>
+          <div class="grid-cont grid-cont-2">
+            <p id="humidity"></p>
+            <h2>Humidity</h2>
+          </div>
+          <div class="grid-cont grid-cont-3">
+            <p id="total-energy"></p>
+            <h2>Total Energy Consumption</h2>
+          </div>
+        </div>
+        <div class="chart-box">
+          <div class="chart">
+            <canvas id="energyConsumptionChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    // Extended energy consumption data
+    const energyConsumptionData = [
+      17.25, 17.21, 17.0, 17.22, 17.09, 18.0, 19.25, 20.5, 21.0, 18.75, 16.5,
+      15.25, 17.1, 19.0, 18.75,
+    ];
+
+    // Corresponding labels (dates/timestamps)
+    const labels = [
+      "2020-01-01 00:00",
+      "2020-01-01 01:00",
+      "2020-01-01 02:00",
+      "2020-01-01 03:00",
+      "2020-01-01 04:00",
+      "2020-01-01 05:00",
+      "2020-01-01 06:00",
+      "2020-01-01 07:00",
+      "2020-01-01 08:00",
+      "2020-01-01 09:00",
+      "2020-01-01 10:00",
+      "2020-01-01 11:00",
+      "2020-01-01 12:00",
+      "2020-01-01 13:00",
+      "2020-01-01 14:00",
+    ];
+
+    // Chart.js bar chart
+    const ctx = document
+      .getElementById("energyConsumptionChart")
+      .getContext("2d");
+    new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: "Energy Consumption (kWh)",
+            data: energyConsumptionData,
+            backgroundColor: "rgb(87, 204, 153,0.8)",
+            borderColor: "rgb(87, 204, 153)",
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: true,
+          },
+          tooltip: {
+            enabled: true,
+          },
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: "Energy Consumption (kWh)",
+            },
+          },
+          x: {
+            title: {
+              display: true,
+              text: "Date & Time",
+            },
+            ticks: {
+              autoSkip: true,
+              maxRotation: 45,
+              minRotation: 45,
+            },
+          },
+        },
+      },
+    });
+    async function fetchWeatherData() {
+      const apiKey = "269cd9d63b71b57a3134fbe597aceb8b";
+      const city = "Chennai";
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data);
+        if (data && data.main && data.main.temp && data.main.humidity) {
+          document.getElementById(
+            "temp"
+          ).innerHTML = `${data.main.temp}<span>°C</span>`;
+          document.getElementById(
+            "humidity"
+          ).innerHTML = `${data.main.humidity}<span>%</span>`;
+        } else {
+          document.getElementById("currentTemp").innerText = "N/A";
+          document.getElementById("humidity").innerText = "N/A";
+        }
+      } catch (error) {
+        console.error("Error fetching weather data:", error);
+        document.getElementById("currentTemp").innerText = "Error";
+      }
+    }
+
+    // Call the fetchWeatherData function when the page loads
+    window.onload = fetchWeatherData;
+
+    const csvFilePath = "static/Final_dataset.csv";
+    async function calculateTotalEnergy() {
+      try {
+        const response = await fetch(csvFilePath);
+        const csvText = await response.text();
+
+        // Parse CSV using PapaParse
+        Papa.parse(csvText, {
+          header: true, // Parse the header row
+          dynamicTyping: true, // Convert numeric values automatically
+          complete: function (results) {
+            const data = results.data;
+
+            // Extract 'elcons' column values
+            const elconsValues = data
+              .map((row) => row.ElCons)
+              .filter((value) => !isNaN(value));
+
+            // Calculate the sum of 'elcons'
+            const totalEnergyConsumption = elconsValues.reduce(
+              (sum, value) => sum + value,
+              0
+            );
+
+            // Update the DOM with the total
+            document.getElementById(
+              "total-energy"
+            ).innerHTML = `${totalEnergyConsumption.toFixed(2)}
+                 <span>kWh</span>
+              `;
+            console.log(totalEnergyConsumption.toFixed(2));
+          },
+          error: function (error) {
+            console.error("Error parsing CSV:", error);
+            document.getElementById("total-energy").innerText =
+              "Failed to load data.";
+          },
+        });
+      } catch (err) {
+        console.error("Error fetching CSV:", err);
+        document.getElementById("total-energy").innerText =
+          "Failed to fetch data.";
+      }
+    }
+
+    // Call the function to calculate and display total energy
+    calculateTotalEnergy();
+  </script>
+</html>

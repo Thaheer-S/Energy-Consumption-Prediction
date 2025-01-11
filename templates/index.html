@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Energy Consumption Prediction</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        /* background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+          url("/static/images/8669683.jpg"); */
+        background: url("/static/images/WhatsApp Image 2025-01-09 at 17.09.41_2fce0fb8.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+
+      .container {
+        max-width: 90%;
+        margin: 50px auto;
+        padding: 20px;
+        background: transparent;
+        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px; */
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .container-1,
+      .container-2 {
+        height: 100%;
+        max-width: 200px;
+      }
+
+      .container-2 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+      input {
+        margin: 10px 0;
+        padding: 10px;
+        font-size: 1rem;
+      }
+      button {
+        padding: 10px;
+        background: #007bff;
+        color: #fff;
+        border: none;
+        font-size: 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #0056b3;
+      }
+      .output {
+        font-size: 1.2rem;
+        color: #333;
+      }
+      .error {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="container-1">
+        <h1>Energy Consumption Prediction</h1>
+        <form action="/predict" method="POST">
+          <label for="Heat">Heat:</label>
+          <input type="number" step="any" id="Heat" name="Heat" required />
+
+          <label for="Pressure">Pressure (msl) (hPa):</label>
+          <input
+            type="number"
+            step="any"
+            id="Pressure"
+            name="Pressure"
+            required
+          />
+
+          <label for="Humidity">Relative humidity (%):</label>
+          <input
+            type="number"
+            step="any"
+            id="Humidity"
+            name="Humidity"
+            required
+          />
+
+          <label for="Temperature">Air temperature (degC):</label>
+          <input
+            type="number"
+            step="any"
+            id="Temperature"
+            name="Temperature"
+            required
+          />
+
+          <label for="WindSpeed">Wind speed (m/s):</label>
+          <input
+            type="number"
+            step="any"
+            id="WindSpeed"
+            name="WindSpeed"
+            required
+          />
+
+          <label for="Weekend">Weekend (0 or 1):</label>
+          <input
+            type="number"
+            min="0"
+            max="1"
+            id="Weekend"
+            name="Weekend"
+            required
+          />
+
+          <button type="submit">Predict</button>
+        </form>
+      </div>
+      <div class="container-2 output">
+        <h1>Output</h1>
+        {% if prediction_text %}
+        <p>{{ prediction_text }}</p>
+        <p>{{ cost_text }}</p>
+        {% elif error_text %}
+        <p class="error">{{ error_text }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>
